@@ -293,19 +293,25 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 const express = require('express');
 const { Pool } = require('./db/pool.js');
-const { get, getAll, post, deleted, update } = require('./controller/controllers.js')
+const { getQuestion, getAllQuestions, postQuestion, deletedQuestion, updateQuestion, getUser, getAllUsers, postUser, deletedUser, updateUser } = require('./controller/controllers.js')
 
 const app = express();
 const jsonParse = express.json();
 
-app.get('/question/:id', get);
-app.get('/questions/', getAll);
-app.post('/question/', jsonParse, post);
-app.put('/question/:id', jsonParse, update);
-app.delete('/question/:id', deleted);
+app.get('/user/:id', getUser);
+app.get('/users/', getAllUsers);
+app.post('/user/', jsonParse, postUser);
+app.put('/user/:id', jsonParse, updateUser);
+app.delete('/user/:id', deletedUser);
 
-app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
+app.get('/question/:id', getQuestion);
+app.get('/questions/', getAllQuestions);
+app.post('/question/', jsonParse, postQuestion);
+app.put('/question/:id', jsonParse, updateQuestion);
+app.delete('/question/:id', deletedQuestion);
+
+app.listen(8080, () => {
+    console.log('Server is running on http://localhost:8080');
 });
 ```
 
@@ -319,7 +325,7 @@ const mysql = require('mysql2');
 const Pool = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
+    password: "password",
     database: "mydb"
 });
 
@@ -346,7 +352,7 @@ const getMaxQuestionId = () => {
     });
 };
 
-const get = (req, res) => {
+const getQuestion = (req, res) => {
     const sql = `SELECT * FROM mydb.questions WHERE id = ${req.params.id}`;
     Pool.query(sql, (error, result, fields) => {
         if (error) {
@@ -361,7 +367,7 @@ const get = (req, res) => {
     });
 };
 
-const getAll = (req, res) => {
+const getAllQuestions = (req, res) => {
     const sql = 'SELECT * from mydb.questions';
     Pool.query(sql, (error, result, fields) => {
         if (error) {
@@ -372,7 +378,7 @@ const getAll = (req, res) => {
     });
 };
 
-const post = (req, res) => {
+const postQuestion = (req, res) => {
     if (!req.body) return res.sendStatus(400);
     getMaxQuestionId().then(data => {
         let maxId = data[0]['MAX(id)'];
@@ -384,7 +390,7 @@ const post = (req, res) => {
     });
 };
 
-const deleted = (req, res) => {
+const deletedQuestion = (req, res) => {
     const sql = `DELETE FROM mydb.questions WHERE id = ${req.params.id}`;
     Pool.query(sql, (error, result, fields) => {
         if (error) {
@@ -399,9 +405,9 @@ const deleted = (req, res) => {
     });
 };
 
-const update = (req, res) => {
+const updateQuestion = (req, res) => {
     if (!req.body) return res.sendStatus(400);
-    const sql = `UPDATE mydb.questions SET type = \"${req.body.type}\", text = \"${req.body.text}\", quiz_id = ${req.body.quiz_id} WHERE id = ${req.params.id}`;
+    const sql = `UPDATE mydb.questions SET text = \"${req.body.text}\", type = \"${req.body.type}\", quiz_id = ${req.body.quiz_id} WHERE id = ${req.params.id}`;
     Pool.query(sql, (err, result, fields) => {
         if (err) {
             console.error('Error updating question:', err);
@@ -415,5 +421,87 @@ const update = (req, res) => {
     });
 };
 
-module.exports = { get: get, getAll: getAll, post: post, deleted: deleted, update: update };
+const getMaxUserId = () => {
+    const sql = 'SELECT MAX(id) FROM mydb.users';
+    return new Promise((resolve, reject) => {
+        Pool.query(sql, (error, result, fields) => {
+            if (error) {
+                console.error('Error fetching max user ID:', error);
+                return reject(error);
+            }
+            return resolve(result);
+        });
+    });
+};
+
+const getUser = (req, res) => {
+    const sql = `SELECT * FROM mydb.users WHERE id = ${req.params.id}`;
+    Pool.query(sql, (error, result, fields) => {
+        if (error) {
+            console.error('Error fetching user:', error);
+            return res.status(500).json(error);
+        }
+        if (result.length) {
+            res.send(result);
+        } else {
+            res.sendStatus(404);
+        }
+    });
+};
+
+const getAllUsers = (req, res) => {
+    const sql = 'SELECT * from mydb.users';
+    Pool.query(sql, (error, result, fields) => {
+        if (error) {
+            console.error('Error fetching all users:', error);
+            return res.status(500).json(error);
+        }
+        res.send(result);
+    });
+};
+
+const postUser = (req, res) => {
+    if (!req.body) return res.sendStatus(400);
+    getMaxUserId().then(data => {
+        let maxId = data[0]['MAX(id)'];
+        const sql = `INSERT INTO mydb.users (id, username, email, password) VALUES (${++maxId},\"${req.body.username}\", \"${req.body.email}\", \"${req.body.password}\")`;
+        Pool.query(sql, (error, result, fields) => {
+            if (error) return res.status(500).json(error);
+            result ? res.send(result) : res.sendStatus(404);
+        });
+    });
+};
+
+const deletedUser = (req, res) => {
+    const sql = `DELETE FROM mydb.users WHERE id = ${req.params.id}`;
+    Pool.query(sql, (error, result, fields) => {
+        if (error) {
+            console.error('Error deleting user:', error);
+            return res.status(500).json(error);
+        }
+        if (result.affectedRows) {
+            res.send(result);
+        } else {
+            res.sendStatus(404);
+        }
+    });
+};
+
+const updateUser = (req, res) => {
+    if (!req.body) return res.sendStatus(400);
+    const sql = `UPDATE mydb.users SET username = \"${req.body.username}\", email = \"${req.body.email}\", password = \"${req.body.password}\" WHERE id = ${req.params.id}`;
+    Pool.query(sql, (err, result, fields) => {
+        if (err) {
+            console.error('Error updating user:', err);
+            return res.status(500).json(err);
+        }
+        if (result.affectedRows) {
+            res.send(result);
+        } else {
+            res.sendStatus(404);
+        }
+    });
+};
+
+module.exports = { getQuestion: getQuestion, getAllQuestions: getAllQuestions, postQuestion: postQuestion, deletedQuestion: deletedQuestion, updateQuestion: updateQuestion, getUser: getUser, getAllUsers: getAllUsers, postUser: postUser, deletedUser: deletedUser, updateUser: updateUser };
 ```

@@ -1,45 +1,73 @@
 # Тестування працездатності системи
 
-## GET
-
-### Отримати всі питання, які є в базі даних
-
-<img src="https://i.postimg.cc/FFcfwBPb/Test1.jpg">
-
-### Отримати одне питання за ID
-
-<img src="https://i.postimg.cc/wTptzQPC/Test2.jpg">
-
 ## POST
 
 ### Створення нового питання
 
-<img src="https://i.postimg.cc/zGDVbXqp/Test3.jpg">
+<img src="https://i.postimg.cc/BnFGdxym/Test1.png">
 
 ### Перевірка
 
-<img src="https://i.postimg.cc/SNfnxzbJ/Test4.jpg">
+<img src="https://i.postimg.cc/JnpwbKDz/Test2.png">
+
+### Додавання нового користувача
+
+<img src="https://i.postimg.cc/GttWzYGJ/Test3.png">
+
+### Перевірка
+
+<img src="https://i.postimg.cc/br5K5JRX/Test4.png">
+
+## GET
+
+### Отримання всіх питань, які є в базі даних 
+
+<img src="https://i.postimg.cc/9XN508Hx/Test5.png">
+
+### Отримання одного питання за ID
+
+<img src="https://i.postimg.cc/m2zxHYbT/Test6.png">
+
+### Отримання всіх користувачів, які є в базі даних
+
+<img src="https://i.postimg.cc/Fs2MgYR3/Test7.png">
+
+### Отримання одного користувача за ID
+
+<img src="https://i.postimg.cc/9QZvxcRS/Test8.png">
 
 ## PUT
 
 ### Оновлення питання
 
-<img src="https://i.postimg.cc/DwCmqkZh/Test5.jpg">
+<img src="https://i.postimg.cc/W4VxCx04/Test9.png">
 
 ### Перевірка
 
-<img src="https://i.postimg.cc/k5BGs16b/Test6.jpg">
+<img src="https://i.postimg.cc/FKxw4GxV/Test10.png">
+
+### Оновлення даних користувача
+
+<img src="https://i.postimg.cc/bJNWNbCc/Test11.png">
+
+### Перевірка
+
+<img src="https://i.postimg.cc/Px3cLx9L/Test12.png">
 
 ## DELETE
 
 ### Видалення питання
 
-<img src="https://i.postimg.cc/RFtF5WTC/Test7.jpg">
+<img src="https://i.postimg.cc/C5R2b0pc/Test13.png">
 
 ### Перевірка
 
-<img src="https://i.postimg.cc/W4C3HGgf/Test8.jpg">
+<img src="https://i.postimg.cc/gj1TD7Ym/Test14.png">
 
-## MySQL
+### Видалення користувача
 
-<img src="https://i.postimg.cc/SRpKymZ6/Test9.jpg">
+<img src="https://i.postimg.cc/Y2PZMvQZ/Test15.png">
+
+### Перевірка
+
+<img src="https://i.postimg.cc/tCVfT95T/Test16.png">

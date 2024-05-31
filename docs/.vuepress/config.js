@@ -15,7 +15,7 @@ module.exports = {
     }]
   ],
   port: 3030,
-  base: '/edu-dis-labs-IO-24-team1/',
+  base: '/db-IO-24-team1/',
   theme: 'cool',
   // dest: 'dist',
   head: [
@@ -81,7 +81,7 @@ module.exports = {
 
     lastUpdated: 'Останнє оновлення', // string | boolean
       // Assumes GitHub. Can also be a full GitLab url.
-    repo: 'https://github.com/dimaskus99/edu-dis-labs-IO-24-team1',
+    repo: 'https://github.com/vikashymko/db-IO-24-team1',
     // Customising the header label
     // Defaults to "GitHub"/"GitLab"/"Bitbucket" depending on `themeConfig.repo`
     repoLabel: 'Github',

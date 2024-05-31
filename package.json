@@ -1,10 +1,10 @@
 {
-  "name": "edu-dis-labs-IO-24-team1",
+  "name": "db-IO-24-team1",
   "version": "2.1.0",
   "main": "index.js",
   "description": "Databases course work template",
-  "repository": "https://github.com/dimaskus99/edu-dis-labs-IO-24-team1",
-  "author": "Horbyk Dmytro <horbyk.dmytro2017@gmail.com>",
+  "repository": "https://github.com/vikashymko/db-IO-24-team1",
+  "author": "Viktoriia Shymko <shimkovika1506@gmail.com>",
   "license": "ECL 2.0",
   "scripts": {
     "test": "jest",
